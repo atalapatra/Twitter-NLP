@@ -1,7 +1,7 @@
 
 cnn_breaking_news = api.user_timeline('cnnbrk')
 
-cnn_breaking_news_df = tweepyToDataframe(cnn_breaking_news)
+cnn_breaking_news_df = Module.tweepyToDataframe(cnn_breaking_news)
 
 # Test that Twitter API connection is working
 public_tweets = api.home_timeline()
