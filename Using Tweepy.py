@@ -9,6 +9,10 @@ https://towardsdatascience.com/creating-the-twitter-sentiment-analysis-program-i
 
 Tweepy, TextBlob and Sentiment Analysis — Python
 https://medium.com/@r.ratan/tweepy-textblob-and-sentiment-analysis-python-47cc613a4e51
+
+TextBlob: Simplified Text Processing
+https://textblob.readthedocs.io/en/dev/
+https://www.earthdatascience.org/courses/use-data-open-source-python/intro-to-apis/analyze-tweet-sentiment-in-python/
 """
 
 import tweepy
@@ -17,7 +21,25 @@ import pandas as pd
 
 ## Functions
 
-def tweepyToDataframe ()
+def tweepyToDataframe (api_data):
+    json_data = [i._json for i in api_data]
+    df = pd.io.json.json_normalize(json_data)
+    return df
+
+def remove_url(txt): # From: https://www.earthdatascience.org/courses/use-data-open-source-python/intro-to-apis/analyze-tweet-sentiment-in-python/
+    """Replace URLs found in a text string with nothing 
+    (i.e. it will remove the URL from the string).
+
+    Parameters
+    ----------
+    txt : string
+        A text string that you want to parse and remove urls.
+
+    Returns
+    -------
+    The same txt string with url's removed.
+    """
+    return " ".join(re.sub("([^0-9A-Za-z \t])|(\w+:\/\/\S+)", "", txt).split())
 
 ## Analysis
 
@@ -32,20 +54,5 @@ auth = tweepy.OAuthHandler(api_key, api_secret_key)
 auth.set_access_token(access_token, access_token_secret)
 
 api = tweepy.API(auth)
-
-# # Test that Twitter API connection is working
-# public_tweets = api.home_timeline()
-# for tweet in public_tweets:
-#     print (f"{tweet.user.name}: {tweet.text}")
-# 
-# public_tweets = pd.DataFrame(public_tweets)
     
-tweets_fetched = api.search("game", count = 10)
 
-for tweet in tweets_fetched:
-    print (f"{tweet.user.name}: {tweet.text}")
-    
-cnn_breaking_news = api.user_timeline('cnnbrk')
-
-json_data = [i._json for i in cnn_breaking_news]
-df = pd.io.json.json_normalize(json_data)
