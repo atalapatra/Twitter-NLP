@@ -18,6 +18,7 @@ https://www.earthdatascience.org/courses/use-data-open-source-python/intro-to-ap
 import tweepy
 import json
 import pandas as pd
+import re
 
 ## Functions
 
