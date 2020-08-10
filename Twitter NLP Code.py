@@ -1,18 +1,5 @@
 """ 
-Useful Resources:
-http://docs.tweepy.org/en/v3.5.0/getting_started.html 
-https://towardsdatascience.com/tweepy-for-beginners-24baf21f2c25
-http://docs.tweepy.org/en/latest/
 
-Creating The Twitter Sentiment Analysis Program in Python with Naive Bayes Classification
-https://towardsdatascience.com/creating-the-twitter-sentiment-analysis-program-in-python-with-naive-bayes-classification-672e5589a7ed
-
-Tweepy, TextBlob and Sentiment Analysis — Python
-https://medium.com/@r.ratan/tweepy-textblob-and-sentiment-analysis-python-47cc613a4e51
-
-TextBlob: Simplified Text Processing
-https://textblob.readthedocs.io/en/dev/
-https://www.earthdatascience.org/courses/use-data-open-source-python/intro-to-apis/analyze-tweet-sentiment-in-python/
 """
 
 import Module
