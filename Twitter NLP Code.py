@@ -27,7 +27,7 @@ api = tweepy.API(auth)
 ## Sentiment Analysis using TextBlob
 
 # Create a custom search term and define the number of tweets
-search_term = "#cyberpunk+2077 -filter:retweets"
+search_term = "#cyberpunk 2077 -filter:retweets"
 
 tweets = tweepy.Cursor(api.search,
                    q=search_term,
@@ -56,3 +56,12 @@ sentiment_df.hist(bins=[-1, -0.75, -0.5, -0.25, 0.25, 0.5, 0.75, 1],
              color="purple")
 
 plt.show()
+
+
+## Create list of search terms and combine into dataframe
+
+search_criteria = ['cyberpunk 2077', 'watch dogs legion', 'hitman 3', 'crusader kings 3', 'star wars squadrons']
+
+
+
+
