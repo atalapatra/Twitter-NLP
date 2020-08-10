@@ -62,6 +62,13 @@ plt.show()
 
 search_criteria = ['cyberpunk 2077', 'watch dogs legion', 'hitman 3', 'crusader kings 3', 'star wars squadrons']
 
+sentiment_df = pd.DataFrame()
 
-
-
+for search in search_criteria:
+    tweets = tweepy.Cursor(api.search,
+                       q=search,
+                       lang="en",
+                       since='2020-01-01').items(1000)
+    tweets_no_urls = [Module.remove_url(tweet.text) for tweet in tweets]
+    sentiment_objects = [TextBlob(tweet) for tweet in tweets_no_urls]
+    sentiment_values = [[tweet.sentiment.polarity, str(tweet)] for tweet in sentiment_objects]
