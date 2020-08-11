@@ -1,6 +1,4 @@
 
-import tweepy
-import json
 import pandas as pd
 import re
 
@@ -25,3 +23,4 @@ def remove_url(txt): # From: https://www.earthdatascience.org/courses/use-data-o
     The same txt string with url's removed.
     """
     return " ".join(re.sub("([^0-9A-Za-z \t])|(\w+:\/\/\S+)", "", txt).split())
+

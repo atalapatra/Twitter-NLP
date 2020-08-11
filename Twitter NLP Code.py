@@ -1,7 +1,3 @@
-""" 
-
-"""
-
 import Module
 import tweepy
 import json
@@ -21,7 +17,15 @@ access_token_secret = connections['Twitter API']['Access Token Secret']
 auth = tweepy.OAuthHandler(api_key, api_secret_key)
 auth.set_access_token(access_token, access_token_secret)
 
-api = tweepy.API(auth)
+api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+
+
+## API Rate Limit Status
+
+data = api.rate_limit_status()
+
+data['resources']['statuses']['/statuses/home_timeline']
+data['resources']['users']['/users/lookup']
 
 
 ## Sentiment Analysis using TextBlob
@@ -32,7 +36,7 @@ search_term = "#cyberpunk 2077 -filter:retweets"
 tweets = tweepy.Cursor(api.search,
                    q=search_term,
                    lang="en",
-                   since='2020-01-01').items(1000)
+                   since='2020-01-01').items(10)
 
 # Remove URLs
 tweets_no_urls = [Module.remove_url(tweet.text) for tweet in tweets]
@@ -60,15 +64,24 @@ plt.show()
 
 ## Create list of search terms and combine into dataframe
 
-search_criteria = ['cyberpunk 2077', 'watch dogs legion', 'hitman 3', 'crusader kings 3', 'star wars squadrons']
+search_criteria = ['cyberpunk 2077',
+                   'watch dogs legion'#,
+                   # 'hitman 3',
+                   # 'crusader kings 3',
+                   # 'star wars squadrons'
+                   ]
 
-sentiment_df = pd.DataFrame()
+sentiment_df = pd.DataFrame(columns=["search terms", "polarity", "subjectivity", "tweet"])
 
 for search in search_criteria:
     tweets = tweepy.Cursor(api.search,
                        q=search,
                        lang="en",
-                       since='2020-01-01').items(1000)
+                       since='2020-01-01').items(10)
     tweets_no_urls = [Module.remove_url(tweet.text) for tweet in tweets]
     sentiment_objects = [TextBlob(tweet) for tweet in tweets_no_urls]
-    sentiment_values = [[tweet.sentiment.polarity, str(tweet)] for tweet in sentiment_objects]
+    sentiment_values = [[str(search), tweet.sentiment.polarity, tweet.sentiment.subjectivity, str(tweet) ] for tweet in sentiment_objects]
+    sentiment_values_df = pd.DataFrame(sentiment_values, columns=["search terms", "polarity", "subjectivity", "tweet"])
+    sentiment_df.append(sentiment_values_df)
+
+sentiment_df
